@@ -36,4 +36,18 @@ public class TodoContoller {
 
         return ResponseEntity.ok(todo);
     }
+
+    //update
+    @PutMapping("{id}")
+    public ResponseEntity<Todo> updateTodo(@PathVariable long id, @RequestBody Todo newTodo){
+        Todo currentTodo = todoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("This to-do doesn't exist"));
+
+        currentTodo.setTitle(newTodo.getTitle());
+        currentTodo.setCompleted(newTodo.isCompleted());
+
+        todoRepository.save(currentTodo);
+
+        return ResponseEntity.ok(currentTodo);
+    }
 }
