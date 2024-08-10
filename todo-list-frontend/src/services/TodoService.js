@@ -14,6 +14,16 @@ class TodoService {
        return axios.post(TODO_BASE_REST_API_URL, todo)
        
    }
+
+   updateTodo(id, newTodo){
+
+      return axios.put(TODO_BASE_REST_API_URL + "/" + id, newTodo)
+   }
+
+   getTodoById(id){
+
+      return axios.get(TODO_BASE_REST_API_URL + "/" + id)
+   }
 }
 
 export default new TodoService;

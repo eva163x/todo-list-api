@@ -1,39 +1,32 @@
-import React, { useState } from 'react';
-import TodoService from '../services/TodoService';
+import React from 'react'
+import {useState} from 'react';
 
-const AddTodo = ({ onAdd }) => {
-    const [task, setTask] = useState('');
+const AddTodo = ({addTodo}) => {
 
-    const saveTask = (e) => {
+    const[value, setValue] = useState("");
+
+    const handleSubmit = (e) => {
+
         e.preventDefault();
-        if (task) {
-            const newTodo = { title: task, completed: false };
-            TodoService.createTodo(newTodo)
-                .then(response => {
-                    onAdd(response.data); // Pass the new todo to the parent component
-                    setTask(''); // Clear the input field
-                })
-                .catch(error => console.log(error));
-        }
-    };
+        addTodo(value)
+        setValue('');
+    }
 
-    return (
-        <div className='container'>
-            <div className='row'>
-                        <form onSubmit={saveTask} style={{ display: 'flex', alignItems: 'center' }}>
-                            <input
-                                type='text'
-                                placeholder='Enter a new task'
-                                className='form-control'
-                                value={task}
-                                onChange={(e) => setTask(e.target.value)}
-                                style={{width: "200px", marginRight: '10px' }} // Stretch to fill space, with margin
-                            />
-                            <button type='submit' className='btn btn-success'>Add Task</button>
-                        </form>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div className="container">
+        <form onSubmit={handleSubmit}>
+            <input
+            type="text"
+            placeholder='Enter a new task'
+            value={value}
+            onChange={(e) => setValue(e.target.value)}>
+            </input>
+            <button type="submit">
+                Add Task
+            </button>
+        </form>
+    </div>
+  )
+}
 
 export default AddTodo;
